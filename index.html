@@ -1,0 +1,130 @@
+<html ng-app="myapp">
+<head>
+	<meta charset="utf-8">
+	<title>Notas</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<link rel="stylesheet" href="sweetalert2.min.css">
+	<!-- <script src="jquery-3.1.1.min.js"></script> -->
+	<script src="angular.min.js"></script>
+	<script src="angular-local-storage.js"></script>
+	<script src="sweetalert2.min.js"></script>
+	<script src="miscript.js"></script>
+
+	<style>
+		.prestyle {
+			white-space: pre;
+			overflow: auto;
+			padding-bottom: 5px; 
+		}
+	</style>
+</head>
+<body>
+	
+<div class="container-fluid" ng-controller="con1">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="page-header">
+				<h1>Notas / Tareas <small>By pavaz stuff co.</small></h1>
+			</div>
+		</div>
+		<div class="col-xs-4">
+			<div class="panel panel-default">
+			  <div class="panel-heading">Buscar</div>
+			  <div class="panel-body">
+				   <div class="form-horizontal">
+				   	<div class="form-group">
+					    <div class="col-sm-12">
+					      <input class="form-control" placeholder="Nota" ng-model="q">
+					    </div>
+					  </div>
+				   </div>
+			  </div>
+			</div>
+			<div class="panel panel-default">
+			  <div class="panel-heading">Nuevo</div>
+			  <div class="panel-body">
+			    <form class="form-horizontal" ng-submit="save()">
+					  <div class="form-group">
+					    <div class="col-sm-12">
+					      <input class="form-control" id="inputEmail3" placeholder="Titulo" ng-model="notas.title" required>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <div class="col-sm-12">
+					      <textarea class="form-control" rows="8" placeholder="Nota" ng-model="notas.nota" required></textarea>
+					      <input type="hidden" ng-model="notas.fecha">
+					    </div>
+					  </div>
+					  <!--
+					  <div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-10">
+					      <button type="submit" class="btn btn-default pull-right">Guardar nota</button>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-10">
+					      <button type="button" class="btn btn-default pull-right" onclick="borrar()">Limpiar lista</button>
+					      <button type="button" style="display:none;" id="btnBorrar" ng-click="vlist = []"></button>
+					    </div>
+					  </div>
+					  -->
+					  <div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-10">
+					    	<div class="btn-group pull-right">
+					    		<button type="button" class="btn btn-default" onclick="borrar()">Limpiar lista</button>
+					    		<button type="submit" class="btn btn-default">Guardar nota</button>
+					    	</div>
+					    </div>
+					  </div>
+					  <button type="button" style="display:none;" id="btnBorrar" ng-click="vlist = []"></button>
+
+					</form>
+			  </div>
+			</div>
+		</div>
+
+
+
+		<div class="col-xs-8">
+			<!--
+			<ul>
+				<li ng-repeat="main in vlist | orderBy : '': true | filter: q">
+					<h3> {{ main.title }} </h3><div style="white-space: pre;">{{ main.nota }} </div>
+					<p> {{ main.fecha | date: 'short' }} </p>
+				</li>
+			</ul>
+			-->
+			<div class="panel panel-default" ng-repeat="main in vlist | orderBy : '': true | filter: q">
+			  <ul class="list-group">
+			    <li class="list-group-item"><h4 contenteditable="false">{{ main.title | uppercase }}</h4></li>
+			    <li class="list-group-item"><div class="prestyle" contenteditable="false"  ng-bind-html="main.nota | html"></div></li>
+			    <li class="list-group-item"><em class="text-muted">{{ main.fecha | date: 'short' }}</em></li>
+			  </ul>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<script>
+	function borrar(){
+		swal({
+		  title: '¿Estas seguro de borrar los datos?',
+		  text: "No volveras a recuperarlos!",
+		  type: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+  		cancelButtonColor: '#d33',
+		  confirmButtonText: 'Si, ¡Borrar!',
+		  cancelButtonText: 'No, ¡Cancelar!',
+		  buttonsStyling: true
+		}).then(function () {
+		  document.getElementById('btnBorrar').click();
+		}, function (dismiss) {
+		  if (dismiss === 'cancel') { }
+		})
+	}
+</script>
+
+</body>
+</html>
