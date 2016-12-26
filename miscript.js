@@ -1,5 +1,4 @@
 angular.module("myapp",["LocalStorageModule"]).
-
 controller("con1", function($scope,localStorageService){
 
 	if(localStorageService.get("info")){
@@ -7,7 +6,6 @@ controller("con1", function($scope,localStorageService){
 	}else{
 		$scope.vlist = [];
 	}
-
 	$scope.$watchCollection("vlist", function(){
 		localStorageService.set("info",$scope.vlist);
 	});
